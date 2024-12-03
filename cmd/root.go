@@ -29,4 +29,9 @@ func GenerateReminderCommand() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	reminderText, err := reminderText()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
