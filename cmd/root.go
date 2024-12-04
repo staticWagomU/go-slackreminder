@@ -29,9 +29,18 @@ func GenerateReminderCommand() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	chosenTiming, err := chooseTiming()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	fmt.Println("タイミング：", chosenTiming)
+
 	reminderText, err := reminderText()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
+	fmt.Println("/remind", chosenDestination, chosenTiming, reminderText)
 }
