@@ -1,16 +1,31 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
+
+	"github.com/charmbracelet/huh"
 )
 
-func chooseDestination() (string, error) {
-	defaultDestination := "me"
-	result, err := createPrompt("送信先を入力してください。デフォルトは『"+defaultDestination+"』です。", defaultDestination)
+func InputDestinations() (string, error) {
+	var destination string
+
+	err := huh.NewForm(
+		huh.NewGroup(
+			huh.NewInput().
+				Title("リマインドする相手は？").
+				Description("defaultは me").
+				Value(&destination),
+		),
+	).Run()
+
 	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
+		log.Fatal(err)
 		return "", err
 	}
 
-	return result, nil
+	if destination == "" {
+		destination = "me"
+	}
+
+	return destination, nil
 }
