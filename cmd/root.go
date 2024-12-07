@@ -24,23 +24,41 @@ func Execute() {
 }
 
 func GenerateReminderCommand() {
-	chosenDestination, err := chooseDestination()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	chosenTiming, err := chooseTiming()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	fmt.Println("タイミング：", chosenTiming)
 
-	reminderText, err := reminderText()
+	destinations, err := InputDestinations()
+	timing, err := chooseTiming()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	fmt.Println("/remind", chosenDestination, chosenTiming, reminderText)
+	var remindCommand string
+
+	if timing == OneTime {
+		remindCommand, err = BuildOneTimeReminderCommand()
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	} else {
+		remindCommand, err = BuildRecurringReminderCommand()
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	}
+
+	content, err := inputContent()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	command := fmt.Sprintf("/remind %s \"%s\" %s\n", destinations, content, remindCommand)
+
+	fmt.Println("↓↓↓下の文字列をコピーしてください↓↓↓↓")
+	fmt.Println(command)
+
 }
