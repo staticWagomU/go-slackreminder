@@ -44,3 +44,33 @@ func InputDate() (string, error) {
 
 	return date, nil
 }
+
+func InputDay() (string, error) {
+	var day string
+
+	err := huh.NewForm(
+		huh.NewGroup(
+			huh.NewInput().
+				Title("送信日は？\nyyyy/MM/ddかMM/ddで書いてね").
+				Validate(func(s string) error {
+					if s == "" {
+						return nil
+					}
+					_, err := time.Parse("02", s)
+					if err != nil {
+						return fmt.Errorf("正しい形式で入力してください")
+					}
+
+					return nil
+				}).
+				Value(&day),
+		),
+	).Run()
+
+	if err != nil {
+		log.Fatal(err)
+		return "", err
+	}
+
+	return fmt.Sprintf("%sth", day), nil
+}
