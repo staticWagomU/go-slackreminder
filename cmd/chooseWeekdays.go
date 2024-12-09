@@ -46,6 +46,10 @@ func ChooseMultiWeekdays() (string, error) {
 	for _, c := range command {
 		weekdays += c + ", "
 	}
+	if len(weekdays) > 0 {
+		// 末尾のカンマとスペースを削除
+		weekdays = weekdays[:len(weekdays)-2]
+	}
 
 	if len(command) == 7 {
 		weekdays = "every day"
