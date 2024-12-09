@@ -14,15 +14,17 @@ const (
 )
 
 func chooseTiming() (string, error) {
+	options := []huh.Option[string]{
+		huh.NewOption("一回限り", OneTime),
+		huh.NewOption("定例", Recurring),
+	}
+
 	var timing string
 	err := huh.NewForm(
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Title("リマインド回数は？").
-				Options(
-					huh.NewOption("一回限り", OneTime),
-					huh.NewOption("定例", Recurring),
-				).
+				Options(options...).
 				Value(&timing),
 		),
 	).Run()

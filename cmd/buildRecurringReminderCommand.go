@@ -10,7 +10,7 @@ import (
 func BuildRecurringReminderCommand() (string, error) {
 	var command string
 
-	var (
+	const (
 		// 毎日
 		EveryDay = "every day"
 		// 平日
@@ -27,19 +27,21 @@ func BuildRecurringReminderCommand() (string, error) {
 		EveryYear = "every year"
 	)
 
+	options := []huh.Option[string]{
+		huh.NewOption("毎日", EveryDay),
+		huh.NewOption("平日", EveryWeekday),
+		huh.NewOption("毎週○曜日", Weekdays),
+		huh.NewOption("隔週の○曜日", AlternateWeekdays),
+		huh.NewOption("毎月○日", EveryMonth),
+		huh.NewOption("隔月の○日", AlternateMonths),
+		huh.NewOption("毎年○月○日", EveryYear),
+	}
+
 	err := huh.NewForm(
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Title("リマインドする日時は？").
-				Options(
-					huh.NewOption("毎日", EveryDay),
-					huh.NewOption("平日", EveryWeekday),
-					huh.NewOption("毎週○曜日", Weekdays),
-					huh.NewOption("隔週の○曜日", AlternateWeekdays),
-					huh.NewOption("毎月○日", EveryMonth),
-					huh.NewOption("隔月の○日", AlternateMonths),
-					huh.NewOption("毎年○月○日", EveryYear),
-				).
+				Options(options...).
 				Value(&command),
 		),
 	).Run()

@@ -10,20 +10,22 @@ import (
 func BuildOneTimeReminderCommand() (string, error) {
 	var command string
 
+	options := []huh.Option[string]{
+		huh.NewOption("20分後", "20 minutes"),
+		huh.NewOption("1時間後", "1 hour"),
+		huh.NewOption("3時間後", "3 hours"),
+		huh.NewOption("明日", "1 day"),
+		huh.NewOption("来週", "1 week"),
+		huh.NewOption("来月", "1 month"),
+		huh.NewOption("特定の日付？", "absolute"),
+		huh.NewOption("○[分時ヶ月]後?", "relative"),
+	}
+
 	err := huh.NewForm(
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Title("リマインドする日時は？").
-				Options(
-					huh.NewOption("20分後", "20 minutes"),
-					huh.NewOption("1時間後", "1 hour"),
-					huh.NewOption("3時間後", "3 hours"),
-					huh.NewOption("明日", "1 day"),
-					huh.NewOption("来週", "1 week"),
-					huh.NewOption("来月", "1 month"),
-					huh.NewOption("特定の日付？", "absolute"),
-					huh.NewOption("○[分時ヶ月]後?", "relative"),
-				).
+				Options(options...).
 				Value(&command),
 		),
 	).Run()

@@ -15,15 +15,7 @@ func InputDate() (string, error) {
 		huh.NewGroup(
 			huh.NewInput().
 				Title("送信日は？\nyyyy/MM/ddかMM/ddで書いてね").
-				Validate(func(s string) error {
-					_, err1 := time.Parse("2006/01/02", s)
-					_, err2 := time.Parse("01/02", s)
-					if err1 != nil && err2 != nil {
-						return fmt.Errorf("正しい形式で入力してください")
-					}
-
-					return nil
-				}).
+				Validate(validateDate).
 				Value(&date),
 		),
 	).Run()
@@ -36,6 +28,16 @@ func InputDate() (string, error) {
 	return date, nil
 }
 
+func validateDate(s string) error {
+	if _, err1 := time.Parse("2006/01/02", s); err1 == nil {
+		return nil
+	}
+	if _, err2 := time.Parse("01/02", s); err2 == nil {
+		return nil
+	}
+	return fmt.Errorf("正しい形式で入力してください")
+}
+
 func InputDay() (string, error) {
 	var day string
 
@@ -43,17 +45,7 @@ func InputDay() (string, error) {
 		huh.NewGroup(
 			huh.NewInput().
 				Title("送信日は？\nyyyy/MM/ddかMM/ddで書いてね").
-				Validate(func(s string) error {
-					if s == "" {
-						return nil
-					}
-					_, err := time.Parse("02", s)
-					if err != nil {
-						return fmt.Errorf("正しい形式で入力してください")
-					}
-
-					return nil
-				}).
+				Validate(validateDay).
 				Value(&day),
 		),
 	).Run()
@@ -68,4 +60,14 @@ func InputDay() (string, error) {
 	}
 
 	return fmt.Sprintf("%sth", day), nil
+}
+
+func validateDay(s string) error {
+	if s == "" {
+		return nil
+	}
+	if _, err := time.Parse("02", s); err != nil {
+		return fmt.Errorf("正しい形式で入力してください")
+	}
+	return nil
 }

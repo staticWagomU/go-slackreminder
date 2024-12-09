@@ -10,19 +10,21 @@ import (
 func ChooseMultiWeekdays() (string, error) {
 	var command []string
 
+	options := []huh.Option[string]{
+		huh.NewOption("日曜日", "Sunday"),
+		huh.NewOption("月曜日", "Monday"),
+		huh.NewOption("火曜日", "Tuesday"),
+		huh.NewOption("水曜日", "Wednesday"),
+		huh.NewOption("木曜日", "Thursday"),
+		huh.NewOption("金曜日", "Friday"),
+		huh.NewOption("土曜日", "Saturday"),
+	}
+
 	err := huh.NewForm(
 		huh.NewGroup(
 			huh.NewMultiSelect[string]().
 				Title("リマインドする曜日は？").
-				Options(
-					huh.NewOption("日曜日", "Sunday"),
-					huh.NewOption("月曜日", "Monday"),
-					huh.NewOption("火曜日", "Tuesday"),
-					huh.NewOption("水曜日", "Wednesday"),
-					huh.NewOption("木曜日", "Thursday"),
-					huh.NewOption("金曜日", "Friday"),
-					huh.NewOption("土曜日", "Saturday"),
-				).
+				Options(options...).
 				Description("複数選択可能").
 				Validate(func(s []string) error {
 					if len(s) == 0 {
@@ -55,19 +57,21 @@ func ChooseMultiWeekdays() (string, error) {
 func ChooseWeekday() (string, error) {
 	var command string
 
+	options := []huh.Option[string]{
+		huh.NewOption("日曜日", "Sunday"),
+		huh.NewOption("月曜日", "Monday"),
+		huh.NewOption("火曜日", "Tuesday"),
+		huh.NewOption("水曜日", "Wednesday"),
+		huh.NewOption("木曜日", "Thursday"),
+		huh.NewOption("金曜日", "Friday"),
+		huh.NewOption("土曜日", "Saturday"),
+	}
+
 	err := huh.NewForm(
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Title("リマインドする曜日は？").
-				Options(
-					huh.NewOption("日曜日", "Sunday"),
-					huh.NewOption("月曜日", "Monday"),
-					huh.NewOption("火曜日", "Tuesday"),
-					huh.NewOption("水曜日", "Wednesday"),
-					huh.NewOption("木曜日", "Thursday"),
-					huh.NewOption("金曜日", "Friday"),
-					huh.NewOption("土曜日", "Saturday"),
-				).
+				Options(options...).
 				Value(&command),
 		),
 	).Run()
