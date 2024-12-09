@@ -29,10 +29,10 @@ func InputDate() (string, error) {
 }
 
 func validateDate(s string) error {
-	if _, err1 := time.Parse("2006/01/02", s); err1 == nil {
-		return nil
-	}
-	if _, err2 := time.Parse("01/02", s); err2 == nil {
+	_, err1 := time.Parse("2006/01/02", s)
+	_, err2 := time.Parse("01/02", s)
+
+	if err1 == nil || err2 == nil {
 		return nil
 	}
 	return fmt.Errorf("正しい形式で入力してください")
@@ -44,7 +44,7 @@ func InputDay() (string, error) {
 	err := huh.NewForm(
 		huh.NewGroup(
 			huh.NewInput().
-				Title("送信日は？\nyyyy/MM/ddかMM/ddで書いてね").
+				Title("何日に送信する？").
 				Validate(validateDay).
 				Value(&day),
 		),
