@@ -57,35 +57,35 @@ func BuildRecurringReminderCommand() (string, error) {
 
 	switch command {
 	case Weekdays:
-		command, err = ChooseMultiWeekdays()
+		weekdays, err := ChooseMultiWeekdays()
 		if err != nil {
 			log.Fatal(err)
 			return "", err
 		}
-		command = fmt.Sprintf("every %s", command)
+		command = fmt.Sprintf("every %s", weekdays)
 	case AlternateWeekdays:
-		command, err = ChooseWeekday()
+		weekday, err := ChooseWeekday()
 		if err != nil {
 			log.Fatal(err)
 			return "", err
 		}
-		command = fmt.Sprintf("every other %s", command)
+		command = fmt.Sprintf("every other %s", weekday)
 	case EveryMonth:
-		command, err = InputDay()
+		day, err := InputDay()
 		if err != nil {
 			log.Fatal(err)
 			return "", err
 		}
-		command = fmt.Sprintf("on the %s of every month", command)
+		command = fmt.Sprintf("on the %s of every month", day)
 	case AlternateMonths:
-		command, err = InputDay()
+		day, err := InputDay()
 		if err != nil {
 			log.Fatal(err)
 			return "", err
 		}
-		command = fmt.Sprintf("every other %s", command)
+		command = fmt.Sprintf("every other %s", day)
 	case EveryYear:
-		command, err = ChooseMonth()
+		month, err := ChooseMonth()
 		if err != nil {
 			log.Fatal(err)
 			return "", err
@@ -95,8 +95,7 @@ func BuildRecurringReminderCommand() (string, error) {
 			log.Fatal(err)
 			return "", err
 		}
-
-		command = fmt.Sprintf("every %s %s", command, day)
+		command = fmt.Sprintf("every %s %s", month, day)
 	default:
 		return "", fmt.Errorf("invalid command: %s", command)
 	}
