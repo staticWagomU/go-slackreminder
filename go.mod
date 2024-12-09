@@ -1,4 +1,4 @@
-module github.com/staticWagomU/go-slackreminder
+module github.com/staticWagomU/slack-reminder
 
 go 1.23.0
 

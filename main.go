@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/staticWagomU/go-slackreminder/cmd"
+	"github.com/staticWagomU/slack-reminder/cmd"
 )
 
 func main() {

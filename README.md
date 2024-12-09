@@ -9,7 +9,7 @@
 以下のコマンドを実行することで、`$GOPATH/bin`に`slack-reminder`バイナリがインストールされます。
 
 ```bash
-go install github.com/staticWagomU/go-slackreminder
+go install github.com/staticWagomU/slack-reminder@latest
 ```
 
 インストール後、`slack-reminder`コマンドをPATHが通ったディレクトリから実行できるようにしてください。
