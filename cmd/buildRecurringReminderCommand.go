@@ -105,7 +105,7 @@ func BuildRecurringReminderCommand() (string, error) {
 		log.Fatal(err)
 		return "", err
 	}
-	command = fmt.Sprintf("%s %s", time, command)
+	command = fmt.Sprintf("in %s %s", time, command)
 
 	return command, nil
 }
