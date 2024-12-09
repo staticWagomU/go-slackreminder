@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -57,8 +58,14 @@ func GenerateReminderCommand() {
 	}
 
 	command := fmt.Sprintf("/remind %s \"%s\" %s\n", destinations, content, remindCommand)
+	command = replaceMultipleSpaces(command)
 
 	fmt.Println("↓↓↓下の文字列をコピーしてください↓↓↓↓")
 	fmt.Println(command)
 
+}
+
+// 複数スペースをひとつに置換
+func replaceMultipleSpaces(s string) string {
+	return strings.Join(strings.Fields(s), " ")
 }
