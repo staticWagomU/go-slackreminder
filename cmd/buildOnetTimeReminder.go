@@ -42,12 +42,6 @@ func BuildOneTimeReminderCommand() (string, error) {
 	var date = ""
 	var time = ""
 	if command == "absolute" {
-		time, err = InputRelativeTime()
-		if err != nil {
-			log.Fatal(err)
-			return "", err
-		}
-	} else {
 		date, err = InputDate()
 		if err != nil {
 			log.Fatal(err)
@@ -55,6 +49,12 @@ func BuildOneTimeReminderCommand() (string, error) {
 		}
 
 		time, err = InputAbsoluteTime()
+		if err != nil {
+			log.Fatal(err)
+			return "", err
+		}
+	} else {
+		time, err = InputRelativeTime()
 		if err != nil {
 			log.Fatal(err)
 			return "", err
