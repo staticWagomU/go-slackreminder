@@ -21,8 +21,6 @@ func BuildRecurringReminderCommand() (string, error) {
 		AlternateWeekdays = "alternate weekdays"
 		// 毎月○日
 		EveryMonth = "every month"
-		// 隔月の○日
-		AlternateMonths = "alternate months"
 		// 毎年○月○日
 		EveryYear = "every year"
 	)
@@ -33,7 +31,6 @@ func BuildRecurringReminderCommand() (string, error) {
 		huh.NewOption("毎週○曜日", Weekdays),
 		huh.NewOption("隔週の○曜日", AlternateWeekdays),
 		huh.NewOption("毎月○日", EveryMonth),
-		huh.NewOption("隔月の○日", AlternateMonths),
 		huh.NewOption("毎年○月○日", EveryYear),
 	}
 
@@ -77,13 +74,6 @@ func BuildRecurringReminderCommand() (string, error) {
 			return "", err
 		}
 		command = fmt.Sprintf("on the %s of every month", day)
-	case AlternateMonths:
-		day, err := InputDay()
-		if err != nil {
-			log.Fatal(err)
-			return "", err
-		}
-		command = fmt.Sprintf("every other %s", day)
 	case EveryYear:
 		month, err := ChooseMonth()
 		if err != nil {
